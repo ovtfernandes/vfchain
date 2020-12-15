@@ -8,6 +8,7 @@ const Block = (timestamp, transactions, previousHash='') => {
         nonce: 0,
         calculateHash,
         mineBlock,
+        hasValidTransactions,
     };
 
     function calculateHash() {
@@ -27,6 +28,16 @@ const Block = (timestamp, transactions, previousHash='') => {
         }
 
         console.log('Block mined:', block.hash);
+    }
+
+    function hasValidTransactions() {
+        for (const tx of block.transactions) {
+            if (!tx.isValid()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     block.hash = calculateHash();

@@ -8,7 +8,7 @@ const Blockchain = () => {
     const miningReward = 100;
 
     function createGenesisBlock() {
-        return Block('14/12/2020', 'Genesis block', '0');
+        return Block(Date.parse('14/12/2020'), [], '0');
     }
 
     function getLatestBlock() {
@@ -16,20 +16,31 @@ const Blockchain = () => {
     }
 
     function minePendingTransactions(miningRewardAddress) {
+        const rewardTx = Transaction(null, miningRewardAddress, miningReward);
+        pendingTransactions.push(rewardTx);
+
         const previousHash = getLatestBlock().hash;
         const newBlock = Block(Date.now(), [...pendingTransactions], previousHash);
         newBlock.mineBlock(difficulty);
 
         console.log('Block successfully mined!');
         chain.push(newBlock);
-
-        const transaction = Transaction(null, miningRewardAddress, miningReward);
+        
         pendingTransactions.splice(0);
-        pendingTransactions.push(transaction);
     }
 
-    function createTransaction(fromAddress, toAddress, amount) {
+    function addTransaction(fromAddress, toAddress, amount, signingKey) {
+        if (!fromAddress || !toAddress) {
+            throw new Error('Transaction must include from and to addresses');
+        }
+
         const newTransaction = Transaction(fromAddress, toAddress, amount);
+        newTransaction.signTransaction(signingKey);
+
+        if (!newTransaction.isValid()) {
+            throw new Error('Cannot add invalid transaction to chain');
+        }
+
         pendingTransactions.push(newTransaction);
     }
 
@@ -56,7 +67,8 @@ const Blockchain = () => {
             const previousBlock = chain[i-1];
 
             if (currentBlock.hash !== currentBlock.calculateHash()
-                || currentBlock.previousHash !== previousBlock.hash) {
+                || currentBlock.previousHash !== previousBlock.hash
+                || !currentBlock.hasValidTransactions()) {
                 return false;
             }
         }
@@ -68,7 +80,7 @@ const Blockchain = () => {
         chain,
         getLatestBlock,
         minePendingTransactions,
-        createTransaction,
+        addTransaction,
         getBalanceOfAddress,
         isChainValid,
     };
