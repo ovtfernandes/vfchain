@@ -6,12 +6,20 @@ const Block = (index, timestamp, data, previousHash='') => {
         timestamp,
         data,
         previousHash,
-        hash: calculateHash(),
+        calculateHash,
     };
 
     function calculateHash() {
+        const {
+            index,
+            previousHash,
+            timestamp,
+            data
+        } = block;
         return SHA256(index+previousHash+timestamp+JSON.stringify(data)).toString();
     }
+
+    block.hash = calculateHash();
 
     return block;
 };

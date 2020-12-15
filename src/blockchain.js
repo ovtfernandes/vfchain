@@ -17,10 +17,25 @@ const Blockchain = () => {
         chain.push(newBlock);
     }
 
+    function isChainValid() {
+        for (let i=1; i<chain.length; i++) {
+            const currentBlock = chain[i];
+            const previousBlock = chain[i-1];
+
+            if (currentBlock.hash !== currentBlock.calculateHash()
+                || currentBlock.previousHash !== previousBlock.hash) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     return {
         chain,
         getLatestBlock,
         addBlock,
+        isChainValid,
     };
 };
 
