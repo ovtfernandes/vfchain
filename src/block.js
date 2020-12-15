@@ -6,7 +6,9 @@ const Block = (index, timestamp, data, previousHash='') => {
         timestamp,
         data,
         previousHash,
+        nonce: 0,
         calculateHash,
+        mineBlock,
     };
 
     function calculateHash() {
@@ -14,9 +16,19 @@ const Block = (index, timestamp, data, previousHash='') => {
             index,
             previousHash,
             timestamp,
-            data
+            data,
+            nonce,
         } = block;
-        return SHA256(index+previousHash+timestamp+JSON.stringify(data)).toString();
+        return SHA256(index+previousHash+timestamp+JSON.stringify(data)+nonce).toString();
+    }
+
+    function mineBlock(difficulty) {
+        while (block.hash.substring(0, difficulty) !== Array(difficulty+1).join('0')) {
+            block.nonce++;
+            block.hash = calculateHash();
+        }
+
+        console.log('Block mined:', block.hash);
     }
 
     block.hash = calculateHash();

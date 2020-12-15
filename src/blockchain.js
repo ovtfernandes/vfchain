@@ -2,6 +2,7 @@ const Block = require('./block');
 
 const Blockchain = () => {
     const chain = [createGenesisBlock()];
+    const difficulty = 4;
 
     function createGenesisBlock() {
         return Block(0, '14/12/2020', 'Genesis block', '0');
@@ -14,6 +15,7 @@ const Blockchain = () => {
     function addBlock(index, timestamp, data) {
         const previousHash = getLatestBlock().hash;
         const newBlock = Block(index, timestamp, data, previousHash);
+        newBlock.mineBlock(difficulty);
         chain.push(newBlock);
     }
 
