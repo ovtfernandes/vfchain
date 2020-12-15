@@ -1,10 +1,9 @@
 const SHA256 = require('crypto-js/sha256');
 
-const Block = (index, timestamp, data, previousHash='') => {
+const Block = (timestamp, transactions, previousHash='') => {
     const block = {
-        index,
         timestamp,
-        data,
+        transactions,
         previousHash,
         nonce: 0,
         calculateHash,
@@ -13,13 +12,12 @@ const Block = (index, timestamp, data, previousHash='') => {
 
     function calculateHash() {
         const {
-            index,
             previousHash,
             timestamp,
-            data,
+            transactions,
             nonce,
         } = block;
-        return SHA256(index+previousHash+timestamp+JSON.stringify(data)+nonce).toString();
+        return SHA256(previousHash+timestamp+JSON.stringify(transactions)+nonce).toString();
     }
 
     function mineBlock(difficulty) {

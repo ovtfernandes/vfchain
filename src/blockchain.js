@@ -1,22 +1,53 @@
 const Block = require('./block');
+const Transaction = require('./transaction');
 
 const Blockchain = () => {
     const chain = [createGenesisBlock()];
-    const difficulty = 4;
+    const difficulty = 2;
+    const pendingTransactions = [];
+    const miningReward = 100;
 
     function createGenesisBlock() {
-        return Block(0, '14/12/2020', 'Genesis block', '0');
+        return Block('14/12/2020', 'Genesis block', '0');
     }
 
     function getLatestBlock() {
         return chain[chain.length-1];
     }
 
-    function addBlock(index, timestamp, data) {
+    function minePendingTransactions(miningRewardAddress) {
         const previousHash = getLatestBlock().hash;
-        const newBlock = Block(index, timestamp, data, previousHash);
+        const newBlock = Block(Date.now(), [...pendingTransactions], previousHash);
         newBlock.mineBlock(difficulty);
+
+        console.log('Block successfully mined!');
         chain.push(newBlock);
+
+        const transaction = Transaction(null, miningRewardAddress, miningReward);
+        pendingTransactions.splice(0);
+        pendingTransactions.push(transaction);
+    }
+
+    function createTransaction(fromAddress, toAddress, amount) {
+        const newTransaction = Transaction(fromAddress, toAddress, amount);
+        pendingTransactions.push(newTransaction);
+    }
+
+    function getBalanceOfAddress(address) {
+        let balance = 0;
+
+        for (const block of chain) {
+            for (const trans of block.transactions) {
+                if (trans.fromAddress === address) {
+                    balance -= trans.amount;
+                }
+                else if (trans.toAddress === address) {
+                    balance += trans.amount;
+                }
+            }
+        }
+
+        return balance;
     }
 
     function isChainValid() {
@@ -36,7 +67,9 @@ const Blockchain = () => {
     return {
         chain,
         getLatestBlock,
-        addBlock,
+        minePendingTransactions,
+        createTransaction,
+        getBalanceOfAddress,
         isChainValid,
     };
 };

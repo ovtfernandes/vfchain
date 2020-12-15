@@ -1,11 +1,15 @@
 const Blockchain = require('./blockchain');
 
 const vfchain = Blockchain();
+vfchain.createTransaction('address1', 'address2', 100);
+vfchain.createTransaction('address2', 'address1', 50);
 
-console.log('Mining block 1...');
-vfchain.addBlock(1, '15/12/2020', { amount: 4 });
-console.log('Block 1 nonce:', vfchain.getLatestBlock().nonce);
+console.log('\nStarting the miner...');
+vfchain.minePendingTransactions('address3');
 
-console.log('Mining block 2...');
-vfchain.addBlock(2, '16/12/2020', { amount: 10 });
-console.log('Block 2 nonce:', vfchain.getLatestBlock().nonce);
+console.log('\nBalance of address3 is', vfchain.getBalanceOfAddress('address3'));
+
+console.log('\nStarting the miner again...');
+vfchain.minePendingTransactions('address3');
+
+console.log('\nBalance of address3 is', vfchain.getBalanceOfAddress('address3'));
