@@ -7,6 +7,7 @@ const Transaction = (fromAddress, toAddress, amount) => {
         fromAddress,
         toAddress,
         amount,
+        timestamp: Date.now(),
         signTransaction,
         isValid,
     };
@@ -16,9 +17,10 @@ const Transaction = (fromAddress, toAddress, amount) => {
             fromAddress,
             toAddress,
             amount,
+            timestamp,
         } = transaction;
 
-        return SHA256(fromAddress+toAddress+amount).toString();
+        return SHA256(fromAddress+toAddress+amount+timestamp).toString();
     }
 
     function signTransaction(signingKey) {
