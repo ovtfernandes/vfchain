@@ -4,9 +4,9 @@ import BlockHash from '../block-hash';
 
 import './styles.css';
 
-function BlockView({ block }) {
+function BlockView({ block, click }) {
     return (
-        <div className="card block-card">
+        <div className="card block-card" onClick={click}>
             <div className="card-body">
                 <h5 className="card-title">
                     Block
