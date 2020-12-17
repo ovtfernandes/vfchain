@@ -3,9 +3,17 @@ const Transaction = require('./transaction');
 
 const Blockchain = () => {
     const chain = [createGenesisBlock()];
-    const difficulty = 2;
+    const blockchain = {
+        chain,
+        difficulty: 2,
+        miningReward: 100,
+        getLatestBlock,
+        minePendingTransactions,
+        addTransaction,
+        getBalanceOfAddress,
+        isChainValid,
+    };
     const pendingTransactions = [];
-    const miningReward = 100;
 
     function createGenesisBlock() {
         return Block(Date.parse('14/12/2020'), [], '0');
@@ -16,12 +24,12 @@ const Blockchain = () => {
     }
 
     function minePendingTransactions(miningRewardAddress) {
-        const rewardTx = Transaction(null, miningRewardAddress, miningReward);
+        const rewardTx = Transaction(null, miningRewardAddress, blockchain.miningReward);
         pendingTransactions.push(rewardTx);
 
         const previousHash = getLatestBlock().hash;
         const newBlock = Block(Date.now(), [...pendingTransactions], previousHash);
-        newBlock.mineBlock(difficulty);
+        newBlock.mineBlock(blockchain.difficulty);
 
         console.log('Block successfully mined!');
         chain.push(newBlock);
@@ -76,14 +84,7 @@ const Blockchain = () => {
         return true;
     }
 
-    return {
-        chain,
-        getLatestBlock,
-        minePendingTransactions,
-        addTransaction,
-        getBalanceOfAddress,
-        isChainValid,
-    };
+    return blockchain;
 };
 
 module.exports = Blockchain;
