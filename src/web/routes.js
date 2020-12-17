@@ -5,6 +5,7 @@ import Header from './components/header';
 import BlockchainViewer from './pages/blockchain-viewer';
 import Settings from './pages/settings';
 import CreateTransaction from './pages/create-transaction';
+import PendingTransactions from './pages/pending-transactions';
 
 function Routes() {
     return (
@@ -13,7 +14,8 @@ function Routes() {
             <Switch>
                 <Route exact path="/" component={BlockchainViewer} />
                 <Route path="/settings" component={Settings} />
-                <Route path="/new/transaction" component={CreateTransaction} />
+                <Route exact path="/new/transaction" component={CreateTransaction} />
+                <Route path="/new/transaction/pending" component={PendingTransactions} />
             </Switch>
         </BrowserRouter>
     );

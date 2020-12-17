@@ -3,17 +3,18 @@ const Transaction = require('./transaction');
 
 const Blockchain = () => {
     const chain = [createGenesisBlock()];
+    const pendingTransactions = [];
     const blockchain = {
         chain,
         difficulty: 2,
         miningReward: 100,
+        pendingTransactions,
         getLatestBlock,
         minePendingTransactions,
         addTransaction,
         getBalanceOfAddress,
         isChainValid,
     };
-    const pendingTransactions = [];
 
     function createGenesisBlock() {
         return Block(Date.now(), [], '0');
