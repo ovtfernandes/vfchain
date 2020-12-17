@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "start": "react-scripts start",
+    "build": "react-scripts build"
   },
   "repository": {
     "type": "git",
@@ -16,14 +17,26 @@
   "bugs": {
     "url": "https://github.com/ovtfernandes/vfchain/issues"
   },
-  "homepage": "https://github.com/ovtfernandes/vfchain#readme",
   "devDependencies": {
-    "nodemon": "^2.0.6"
+    "react-scripts": "^3.4.4"
   },
   "dependencies": {
     "crypto-js": "^4.0.0",
     "elliptic": "^6.5.3",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
+    "react-router-dom": "^5.2.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
