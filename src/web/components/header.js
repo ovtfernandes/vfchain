@@ -9,6 +9,8 @@ function Header() {
 
             <div>
                 <Link to="/settings" className="btn btn-outline-light">Settings</Link>
+                &nbsp;
+                <Link to="/new/transaction" className="btn btn-outline-light">Create transaction</Link>
             </div>
         </nav>
     );

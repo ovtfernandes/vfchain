@@ -28,6 +28,7 @@ function VFChain() {
         return blockchainInstance.chain;
     }
 
+    blockchainInstance.walletKeys = walletKeys;
     blockchainInstance.getBlocks = getBlocks;
 
     return blockchainInstance;
