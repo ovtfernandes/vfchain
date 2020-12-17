@@ -1,14 +1,12 @@
 import React from 'react';
 
-import Header from './components/header';
-import BlockchainViewer from './pages/blockchain-viewer';
 import { VFChainProvider } from './contexts/vfchain';
+import Routes from './routes';
 
 function App() {
     return (
         <VFChainProvider>
-            <Header />
-            <BlockchainViewer />
+            <Routes />
         </VFChainProvider>
     );
 }
