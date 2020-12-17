@@ -28,9 +28,9 @@ function VFChain() {
         return blockchainInstance.chain;
     }
 
-    return {
-        getBlocks,
-    };
+    blockchainInstance.getBlocks = getBlocks;
+
+    return blockchainInstance;
 }
 
 export default VFChain;
