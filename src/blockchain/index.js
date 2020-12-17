@@ -16,7 +16,7 @@ const Blockchain = () => {
     const pendingTransactions = [];
 
     function createGenesisBlock() {
-        return Block(Date.parse('14/12/2020'), [], '0');
+        return Block(Date.now(), [], '0');
     }
 
     function getLatestBlock() {
