@@ -1,8 +1,13 @@
 import React from 'react';
 
+import Header from './components/header';
+import { VFChainProvider } from './contexts/vfchain';
+
 function App() {
     return (
-        <h1>Hello VFChain</h1>
+        <VFChainProvider>
+            <Header />
+        </VFChainProvider>
     );
 }
 
